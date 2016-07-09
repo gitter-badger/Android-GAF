@@ -50,9 +50,9 @@ public class LoopSync {
         // Get current thread
         Thread currentThread = Thread.currentThread();
 
-        // Continue only if current thread is registered
+        // Register current thread if not already
         if (!stateMap.containsKey(currentThread)) {
-            throw new IllegalStateException("LoopSync method called from unregistered thread");
+            stateMap.put(currentThread, new LoopState());
         }
 
         // Get loop state for current thread
@@ -64,7 +64,7 @@ public class LoopSync {
 
     /**
      * Get elapsed time since last call to {@link #sync()} in seconds.
-     * <p/>
+     * <p>
      * This is a convenience method for the following: {@code LoopSync.deltaNanos() / 1000000000d }
      *
      * @return Elapsed time in seconds
@@ -82,9 +82,9 @@ public class LoopSync {
         // Get current thread
         Thread currentThread = Thread.currentThread();
 
-        // Continue only if current thread is registered
+        // Register current thread if not already
         if (!stateMap.containsKey(currentThread)) {
-            throw new IllegalStateException("LoopSync method called from unregistered thread");
+            stateMap.put(currentThread, new LoopState());
         }
 
         // Get loop state for current thread
@@ -112,9 +112,9 @@ public class LoopSync {
         // Get current thread
         Thread currentThread = Thread.currentThread();
 
-        // Continue only if current thread is registered
+        // Register current thread if not already
         if (!stateMap.containsKey(currentThread)) {
-            throw new IllegalStateException("LoopSync method called from unregistered thread");
+            stateMap.put(currentThread, new LoopState());
         }
 
         // Get loop state for current thread

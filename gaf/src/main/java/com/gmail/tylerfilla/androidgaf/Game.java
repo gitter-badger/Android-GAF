@@ -9,12 +9,12 @@ import java.util.Set;
 
 public abstract class Game {
 
-    private LoopThread loopThread;
-    private Set<LoopHook> loopHookSet;
+    protected LoopThread loopThread;
+    protected Set<LoopHook> loopHookSet;
 
-    private List<GamePiece> gamePieceList;
+    protected List<GamePiece> gamePieceList;
 
-    private Game() {
+    protected Game() {
         loopThread = new LoopThread();
         loopHookSet = new HashSet<>();
 
@@ -56,6 +56,8 @@ public abstract class Game {
     public void stop() {
         loopThread.doStop();
     }
+
+    public abstract void loop();
 
     public interface LoopHook {
 
@@ -106,6 +108,9 @@ public abstract class Game {
                 for (LoopHook loopHook : loopHookSet) {
                     loopHook.hook();
                 }
+
+                // Perform main loop
+                loop();
 
                 // Loop sync
                 LoopSync.sync();
