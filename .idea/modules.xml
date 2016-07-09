@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidGAF.iml" filepath="$PROJECT_DIR$/AndroidGAF.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gaf/gaf.iml" filepath="$PROJECT_DIR$/gaf/gaf.iml" />
     </modules>
   </component>
 </project>
