@@ -1,15 +1,17 @@
 package com.gmail.tylerfilla.androidgaf.util;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoopSync {
 
-    private static final Map<Thread, LoopState> stateMap = new HashMap<>();
+    private static final Map<Thread, LoopState> stateMap = Collections.synchronizedMap(new HashMap<Thread, LoopState>());
 
     /**
-     * Attempts to match the current loop's frequency to the target frequency on a per-thread
-     * basis.
+     * Attempts to match the current loop's frequency to the target frequency on a per-thread basis.
+     * It is an error (or just plain strange, at the least) to call this method more than once per
+     * loop iteration.
      */
     public static void sync() {
         // Get current thread
@@ -124,11 +126,30 @@ public class LoopSync {
         return state.targetDuration - (System.nanoTime() - state.timeLastIteration);
     }
 
+    /**
+     * Internal representation of per-thread loop state.
+     */
     private static class LoopState {
 
-        private long targetDuration;
-        private long timeLastIteration;
-        private long totalIterations;
+        private static final long DEFAULT_TARGET_DURATION;
+        private static final long DEFAULT_TIME_LAST_ITERATION;
+        private static final long DEFAULT_TOTAL_ITERATIONS;
+
+        public long targetDuration;
+        public long timeLastIteration;
+        public long totalIterations;
+
+        public LoopState() {
+            targetDuration = DEFAULT_TARGET_DURATION;
+            timeLastIteration = DEFAULT_TIME_LAST_ITERATION;
+            totalIterations = DEFAULT_TOTAL_ITERATIONS;
+        }
+
+        static {
+            DEFAULT_TARGET_DURATION = (long) (1000000000d / 60d);
+            DEFAULT_TIME_LAST_ITERATION = System.nanoTime();
+            DEFAULT_TOTAL_ITERATIONS = 0l;
+        }
 
     }
 
